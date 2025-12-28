@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --green-900: #061910;
+  --green-800: #0b2c22;
+  --green-700: #0f3f30;
+  --green-600: #12613d;
+  --green-500: #1b7c4d;
+  --green-400: #2d9c68;
+  --green-300: #53c187;
+  --green-200: #c9e7d8;
+  --neutral-50: #f6f8f6;
+  --neutral-100: #eef3ef;
+  --text-light: #f7fbf8;
+  --text-dark: #102018;
+  --elevation-1: 0 12px 30px rgba(0, 0, 0, 0.16);
+  --elevation-2: 0 14px 40px rgba(0, 0, 0, 0.18);
+  --elevation-3: 0 18px 60px rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--green-900);
+  color: var(--text-light);
+  min-height: 100vh;
+  scroll-snap-type: y proximity;
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--green-300);
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+p {
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
