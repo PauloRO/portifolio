@@ -125,9 +125,76 @@
   align-items: center;
 }
 
+.simple-hero {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
 .hero-text h1 {
   font-size: clamp(2.4rem, 4vw, 3.4rem);
   margin: 0.4rem 0 0.8rem;
+}
+
+.hero-title {
+  margin: 0.4rem 0 0.3rem;
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.typewriter-line {
+  display: flex;
+  flex-direction: column; 
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  width: 0;
+  border-right: 3px solid var(--green-300);
+  animation: typing 1.6s steps(var(--steps, 14), end) forwards,
+    blink 0.9s step-end infinite;
+  animation-delay: var(--delay, 0s), var(--delay, 0s);
+}
+
+.line1 {
+  --steps: 12;
+  --delay: 0s;
+}
+
+.line2 {
+  --steps: 14;
+  --delay: 1.7s;
+}
+
+.name-highlight {
+  color: var(--green-300);
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--green-200);
+  margin: 0 0 0.6rem;
+  font-weight: 600;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--green-300);
+  }
 }
 
 .hero-text .chips {
@@ -181,6 +248,17 @@
   transform: translateY(-2px);
   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
   outline: none;
+}
+
+.photo-frame {
+  width: min(320px, 80vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 45%),
+    linear-gradient(135deg, var(--green-500), var(--green-700));
+  border: 4px solid color-mix(in srgb, var(--green-200) 60%, transparent);
+  box-shadow: var(--elevation-3);
+  justify-self: center;
 }
 
 .hero-panel {
@@ -433,14 +511,9 @@
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
-}
-
-.reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -451,6 +524,25 @@
     transition: none;
     transform: none !important;
     opacity: 1 !important;
+  }
+
+  .typewriter-line {
+    animation: none;
+    border-right: 0;
+    width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    line-height: 1.25;
+  }
+
+  .typewriter-line {
+    white-space: normal;
+    animation: none;
+    border-right: 0;
+    width: auto;
   }
 }
 

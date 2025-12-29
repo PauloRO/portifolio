@@ -44,9 +44,16 @@ export class App implements AfterViewInit, OnDestroy {
       { threshold: 0.2 }
     );
 
-    document
-      .querySelectorAll<HTMLElement>('.reveal')
-      .forEach((element) => this.observer?.observe(element));
+    const elements = document.querySelectorAll<HTMLElement>('.reveal');
+    elements.forEach((element) => {
+      this.observer?.observe(element);
+      const rect = element.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.9;
+      if (inView) {
+        element.classList.add('visible');
+        this.observer?.unobserve(element);
+      }
+    });
   }
 
   ngOnDestroy(): void {
