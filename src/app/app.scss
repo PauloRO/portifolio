@@ -259,6 +259,16 @@
   border: 4px solid color-mix(in srgb, var(--green-200) 60%, transparent);
   box-shadow: var(--elevation-3);
   justify-self: center;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.photo-frame img {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  display: block;
 }
 
 .hero-panel {

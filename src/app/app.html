@@ -27,7 +27,7 @@
           </h1>
           <p class="subtitle">Desenvolvedor Front-end (Angular · TypeScript)</p>
           <div class="cta-group">
-            <a class="btn primary" href="../app/assets/curriculo_paulo.pdf" download>
+            <a class="btn primary" href="assets/pdf/curriculo_paulo.pdf" download>
               Baixar currículo
             </a>
             <a class="btn ghost" href="#contact">Falar comigo</a>
@@ -35,9 +35,11 @@
         </div>
         <div
           class="photo-frame reveal"
-          role="img"
-          aria-label="Foto de Paulo Oliveira (placeholder)"
-        ></div>
+            role="img"
+            aria-label="Foto de Paulo Oliveira"
+          >
+            <img src="assets/images/IMG_6727.jpg" alt="Foto de Paulo Oliveira" />
+        </div>
       </div>
     </section>
 
@@ -154,7 +156,9 @@
     <div class="project-modal" [class.open]="!!selectedProject()">
       <div class="project-backdrop" (click)="closeProject()"></div>
       <div class="project-dialog" *ngIf="selectedProject() as current">
-        <button class="close-btn" type="button" aria-label="Fechar" (click)="closeProject()">×</button>
+        <button class="close-btn" type="button" aria-label="Fechar" (click)="closeProject()">
+          ×
+        </button>
         <div class="dialog-visual" [style.background-image]="current.preview"></div>
         <div class="dialog-content">
           <p class="eyebrow">{{ current.status }}</p>
@@ -209,19 +213,14 @@
             href="https://www.linkedin.com/in/paulorobertosá/"
             target="_blank"
             rel="noopener"
-            >
+          >
             <span class="contact-icon" aria-hidden="true">💼</span>
             <span class="contact-text">
               <span class="contact-label">LinkedIn</span>
               <span class="contact-value">/in/paulorobertosá</span>
             </span>
           </a>
-          <a
-            class="contact-card"
-            href="https://github.com/PauloRO"
-            target="_blank"
-            rel="noopener"
-            >
+          <a class="contact-card" href="https://github.com/PauloRO" target="_blank" rel="noopener">
             <span class="contact-icon" aria-hidden="true">🐙</span>
             <span class="contact-text">
               <span class="contact-label">GitHub</span>
