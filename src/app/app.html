@@ -174,21 +174,12 @@
       <div class="section-content">
         <div class="section-header reveal">
           <p class="eyebrow">Tecnologias</p>
-          <h2>Stack pronta para produtos modernos.</h2>
         </div>
         <div class="tech-grid reveal">
-          <span class="tech-chip">Angular</span>
-          <span class="tech-chip">TypeScript</span>
-          <span class="tech-chip">Ionic</span>
-          <span class="tech-chip">HTML/CSS</span>
-          <span class="tech-chip">Java · Spring Boot</span>
-          <span class="tech-chip">PostgreSQL</span>
-          <span class="tech-chip">APIs REST</span>
-          <span class="tech-chip">Node · NPM</span>
-          <span class="tech-chip">Firebase</span>
-          <span class="tech-chip">Git/GitHub</span>
-          <span class="tech-chip">Postman/Insomnia</span>
-          <span class="tech-chip">Scrum</span>
+          <article class="tech-card" *ngFor="let tech of techs">
+            <span class="tech-icon" aria-hidden="true">{{ tech.icon }}</span>
+            <span class="tech-label">{{ tech.label }}</span>
+          </article>
         </div>
       </div>
     </section>

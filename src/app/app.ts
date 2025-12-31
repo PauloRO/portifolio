@@ -18,6 +18,11 @@ type Project = {
   meta: string[];
 };
 
+type Tech = {
+  label: string;
+  icon: string;
+};
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -67,6 +72,25 @@ export class App implements AfterViewInit, OnDestroy {
     },
   ];
   readonly selectedProject = signal<Project | null>(null);
+  readonly techs: Tech[] = [
+    { label: 'Angular', icon: '🅰️' },
+    { label: 'TypeScript', icon: '🟦' },
+    { label: 'Java', icon: '☕' },
+    { label: 'Spring Boot', icon: '🌱' },
+    { label: 'PostgreSQL', icon: '🐘' },
+    { label: 'APIs REST', icon: '🔗' },
+    { label: 'Node.js', icon: '🟢' },
+    { label: 'NPM', icon: '📦' },
+    { label: 'Firebase', icon: '🔥' },
+    { label: 'Git', icon: '🔀' },
+    { label: 'GitHub', icon: '🐙' },
+    { label: 'Postman', icon: '✉️' },
+    { label: 'Insomnia', icon: '🌙' },
+    { label: 'Scrum', icon: '📈' },
+    { label: 'Ionic', icon: '💠' },
+    { label: 'HTML', icon: '🟧' },
+    { label: 'CSS', icon: '🎨' },
+  ];
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) {
