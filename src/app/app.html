@@ -126,51 +126,49 @@
           <h2>Seleção de entregas em tela cheia com Material feel.</h2>
         </div>
         <div class="project-grid">
-          <article class="project-card reveal">
-            <div class="card-top">
-              <h3>Portal interno Angular</h3>
-              <span class="tag soft">Produção</span>
-            </div>
-            <p>
-              Interfaces responsivas, autenticação e painéis dinâmicos consumindo APIs REST. Ênfase
-              em acessibilidade e performance.
-            </p>
-            <div class="card-meta">
-              <span>Angular · TypeScript · A11y</span>
-              <span>API REST · JWT</span>
-            </div>
-          </article>
-          <article class="project-card reveal">
-            <div class="card-top">
-              <h3>APIs Spring Boot</h3>
-              <span class="tag soft">Backend</span>
-            </div>
-            <p>
-              Criação de endpoints RESTful com Spring Boot (MVC), regras de negócio e integração com
-              PostgreSQL.
-            </p>
-            <div class="card-meta">
-              <span>Spring Boot · PostgreSQL</span>
-              <span>pgAdmin / DBeaver</span>
-            </div>
-          </article>
-          <article class="project-card reveal">
-            <div class="card-top">
-              <h3>Landing full height</h3>
-              <span class="tag soft">Pessoal</span>
-            </div>
-            <p>
-              Landing page em 100vh com scroll suave, âncoras e microinterações inspiradas no
-              Material Motion.
-            </p>
-            <div class="card-meta">
-              <span>Angular · Motion</span>
-              <span>Scroll suave</span>
+          <article
+            class="project-card reveal"
+            *ngFor="let project of projects"
+            (click)="openProject(project)"
+            (keydown.enter)="openProject(project)"
+            role="button"
+            tabindex="0"
+          >
+            <div class="project-thumb" [style.background-image]="project.preview"></div>
+            <div class="project-overlay">
+              <div class="project-top">
+                <span class="tag soft">{{ project.status }}</span>
+                <h3>{{ project.title }}</h3>
+                <p class="subtitle">{{ project.subtitle }}</p>
+              </div>
+              <div class="chip-row">
+                <span class="chip" *ngFor="let tech of project.tech">{{ tech }}</span>
+              </div>
+              <span class="preview-hint">Ver prévia ↗</span>
             </div>
           </article>
         </div>
       </div>
     </section>
+
+    <div class="project-modal" [class.open]="!!selectedProject()">
+      <div class="project-backdrop" (click)="closeProject()"></div>
+      <div class="project-dialog" *ngIf="selectedProject() as current">
+        <button class="close-btn" type="button" aria-label="Fechar" (click)="closeProject()">×</button>
+        <div class="dialog-visual" [style.background-image]="current.preview"></div>
+        <div class="dialog-content">
+          <p class="eyebrow">{{ current.status }}</p>
+          <h3>{{ current.title }}</h3>
+          <p class="lead">{{ current.subtitle }}</p>
+          <p class="description">
+            {{ current.description }}
+          </p>
+          <div class="chip-row">
+            <span class="chip" *ngFor="let meta of current.meta">{{ meta }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section id="tech" class="section tech">
       <div class="section-content">
