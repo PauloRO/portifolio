@@ -217,7 +217,8 @@
 
 .line2 {
   --steps: 14;
-  --delay: 1.7s;
+  --delay: 1.3s;
+  --type-width: 11ch;
 }
 
 .name-highlight {
@@ -237,7 +238,7 @@
     width: 0;
   }
   to {
-    width: 100%;
+    width: var(--type-width, 100%);
   }
 }
 
