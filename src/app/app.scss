@@ -720,6 +720,70 @@ html.modal-open {
   background: #082219;
 }
 
+.contact .section-content.split {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.6rem;
+}
+
+.contact .section-header .eyebrow {
+  font-size: 1.15rem;
+  letter-spacing: 0.14em;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  width: 100%;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-width: 210px;
+  padding: 0.95rem 1.05rem;
+  border-radius: 18px;
+  text-align: center;
+  color: #e7f5ec;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.contact-label {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.contact-value {
+  color: var(--green-100);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
 .contact-panel {
   background: color-mix(in srgb, var(--green-800) 85%, transparent);
   border: 1px solid color-mix(in srgb, var(--green-500) 35%, transparent);
