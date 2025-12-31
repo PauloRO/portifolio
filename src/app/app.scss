@@ -102,7 +102,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.85rem;
-  color: var(--green-200);
+  color: var(--green-500);
   margin: 0;
 }
 
@@ -382,6 +382,33 @@
   margin: 0.35rem 0 0.3rem;
 }
 
+.experience-points {
+  list-style: none;
+  padding: 0;
+  margin: 0.65rem 0 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.experience-points li {
+  position: relative;
+  padding-left: 1.4rem;
+  line-height: 1.5;
+}
+
+.experience-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--green-700);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--green-700) 12%, transparent);
+  transform: translateY(-50%);
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -506,7 +533,7 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.75rem;
-  color: var(--green-200);
+  color: var(--green-400);
   margin: 0;
 }
 
