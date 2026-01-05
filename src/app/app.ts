@@ -38,28 +38,28 @@ export class App implements AfterViewInit, OnDestroy {
   private observer?: IntersectionObserver;
   readonly projects: Project[] = [
     {
-      title: 'Portal interno Angular',
+      title: 'Carros Auto Mall ERP',
       status: 'Produção',
-      subtitle: 'Painéis dinâmicos, autenticação e UX acessível.',
+      subtitle: '',
       description:
-        'Dashboard interno com cards configuráveis, autenticação JWT, gráficos em tempo real e navegação acessível seguindo Material 3.',
+        'Sistema ERP para gestão de compra e venda de carros. Sistema de cadastro de veiculos, clientes, fornecedores.. com regras de negocio para simulações e vendas.',
       preview:
-        'linear-gradient(140deg, rgba(12, 32, 25, 0.78), rgba(8, 24, 19, 0.82)), url("https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=1200&q=80")',
-      tech: ['Angular', 'TypeScript', 'A11y'],
+        'linear-gradient(140deg, rgba(12, 32, 25, 0.78), rgba(8, 24, 19, 0.82)), url("assets/projetos/carros_erp.jpeg")',
+      tech: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
       meta: ['API REST', 'JWT', 'Design System'],
     },
     {
-      title: 'APIs Spring Boot',
-      status: 'Backend',
-      subtitle: 'APIs RESTful com regras de negócio e monitoramento.',
+      title: 'Carros Auto Mall Site',
+      status: 'Produção',
+      subtitle: '',
       description:
-        'Camada de serviços com Spring Boot (MVC), versionamento de endpoints, validação, métricas e integrações com PostgreSQL.',
+        'Site para venda de veiculos.',
       preview:
-        'linear-gradient(150deg, rgba(13, 36, 29, 0.82), rgba(6, 22, 17, 0.78)), url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80")',
-      tech: ['Spring Boot', 'PostgreSQL', 'Docker'],
-      meta: ['RESTful', 'Observability', 'Clean Architecture'],
+        'linear-gradient(150deg, rgba(13, 36, 29, 0.82), rgba(6, 22, 17, 0.78)), url("assets/projetos/carros_site.jpeg")',
+      tech: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
+      meta: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
     },
-    {
+    /* {
       title: 'Landing full height',
       status: 'Pessoal',
       subtitle: 'Landing 100vh com microinterações e scroll suave.',
@@ -69,7 +69,7 @@ export class App implements AfterViewInit, OnDestroy {
         'linear-gradient(130deg, rgba(7, 28, 22, 0.78), rgba(9, 36, 27, 0.84)), url("https://images.unsplash.com/photo-1507537509458-b8312d35a233?auto=format&fit=crop&w=1200&q=80")',
       tech: ['Angular', 'Motion', 'Scroll suave'],
       meta: ['Microinterações', 'Animações', 'SEO'],
-    },
+    }, */
   ];
   readonly selectedProject = signal<Project | null>(null);
   readonly techs: Tech[] = [
@@ -150,5 +150,10 @@ export class App implements AfterViewInit, OnDestroy {
     if (this.isBrowser) {
       document.documentElement.classList.remove('modal-open');
     }
+  }
+
+  getPreviewImage(preview: string): string {
+    const match = preview.match(/url\(["']?(.*?)["']?\)/);
+    return match ? match[1] : preview;
   }
 }

@@ -136,7 +136,9 @@
             role="button"
             tabindex="0"
           >
-            <div class="project-thumb" [style.background-image]="project.preview"></div>
+            <div class="project-thumb" [style.background-image]="project.preview">
+              <img [src]="getPreviewImage(project.preview)" [alt]="project.title">
+            </div>
             <div class="project-overlay">
               <div class="project-top">
                 <span class="tag soft">{{ project.status }}</span>
