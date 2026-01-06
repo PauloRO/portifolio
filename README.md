@@ -1,59 +1,45 @@
-# Portifolio
+# Portfólio — Paulo Oliveira
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+Este é meu site pessoal em Angular 21: uma single-page para apresentar meu perfil, experiência e projetos. Tudo é responsivo, com animações suaves, navegação fixa e modal para ver detalhes dos projetos. O build já sai pronto para SSR, então posso publicar como site estático ou rodar em Node.
 
-## Development server
+## O que você encontra
+- Hero com animação “typewriter”, CTA para baixar meu currículo e falar comigo.
+- Seções “Sobre”, “Experiência”, “Projetos”, “Tecnologias” e “Contato” em uma página.
+- Grid de projetos com pré-visualização e modal de detalhes usando Angular Signals.
+- Navegação fixa no desktop e barra inferior dedicada para mobile.
+- Animações de entrada via `IntersectionObserver`, respeitando quem prefere menos movimento.
 
-To start a local development server, run:
+## Stack e arquitetura
+- Angular 21 (standalone), TypeScript e SCSS.
+- SSR via `@angular/ssr` (`outputMode: server`).
+- Estilos principais em `src/app/app.scss`, tema escuro/esmeralda.
+- Dados e layout em `src/app/app.ts` e `src/app/app.html`.
+- Imagens e currículo em `src/assets` e `public/assets`.
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Rodando localmente
+Pré-requisitos: Node 20+ (npm 11 incluso) e npm instalado.
 
 ```bash
-ng generate --help
+npm install          # instala dependências
+npm start            # ng serve em modo dev (http://localhost:4200)
 ```
 
-## Building
-
-To build the project run:
-
+## Build e execução
 ```bash
-ng build
+npm run build                     # build otimizado (browser + server em dist/portifolio)
+npm run serve:ssr:portifolio      # serve a versão SSR (node dist/portifolio/server/server.mjs)
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Para deploy estático, publico `dist/portifolio/browser`.
+- Para deploy SSR/Node, uso `dist/portifolio/server/server.mjs` (ou container conforme a infra).
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
+## Testes
 ```bash
-ng test
+npm test   # Vitest integrado pelo Angular CLI
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Scripts disponíveis
+- `npm start` — servidor de desenvolvimento com recarregamento automático.
+- `npm run build` — build de produção (gera browser e server).
+- `npm run serve:ssr:portifolio` — serve o bundle SSR gerado em `dist`.
+- `npm test` — roda a suíte de testes unitários.
