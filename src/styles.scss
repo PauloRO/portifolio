@@ -9,6 +9,14 @@
   --green-400: #2d9c68;
   --green-300: #53c187;
   --green-200: #c9e7d8;
+  --accent-green: #34d399;
+  --accent-teal: #14b8a6;
+  --accent-cyan: #22d3ee;
+  --accent-blue: #3b82f6;
+  --blue-900: #07142b;
+  --blue-800: #0b1f3f;
+  --gradient-accent: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-cyan) 55%, var(--accent-blue) 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(52, 211, 153, 0.18), rgba(59, 130, 246, 0.18));
   --neutral-50: #f6f8f6;
   --neutral-100: #eef3ef;
   --text-light: #f7fbf8;
@@ -41,7 +49,7 @@ a {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--green-300);
+  outline: 2px solid var(--accent-cyan);
   outline-offset: 2px;
 }
 

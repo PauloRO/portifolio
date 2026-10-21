@@ -59,6 +59,30 @@ export class App implements AfterViewInit, OnDestroy {
       tech: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
       meta: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
     },
+    {
+      title: 'LawHubber',
+      status: 'Pessoal',
+      subtitle: 'Gestão de escritório de advocacia.',
+      description:
+        'Aplicação web de gestão jurídica (processos, contratos, clientes, advogados, tarefas e publicações do DJEN), com dashboard, auditoria, autenticação, rotas protegidas e carregamento sob demanda. Conta com guards de rota, interceptor HTTP, formulários reativos e proteção contra saída com alterações não salvas.',
+      preview:
+        'linear-gradient(140deg, rgba(10, 46, 35, 0.78), rgba(11, 34, 68, 0.82)), url("assets/projetos/lawhubber.png")',
+      tech: ['Angular 21', 'TypeScript', 'RxJS', 'PrimeNG', 'Tailwind CSS', 'Chart.js', 'Vitest'],
+      meta: [
+        'Angular 21',
+        'Standalone',
+        'Signals',
+        'Lazy loading',
+        'SSR',
+        'Guards de rota',
+        'Interceptor HTTP',
+        'Formulários reativos',
+        'PrimeNG',
+        'Tailwind CSS',
+        'Chart.js',
+        'Vitest',
+      ],
+    },
     /* {
       title: 'Landing full height',
       status: 'Pessoal',
@@ -74,22 +98,35 @@ export class App implements AfterViewInit, OnDestroy {
   readonly selectedProject = signal<Project | null>(null);
   readonly techs: Tech[] = [
     { label: 'Angular', icon: '🅰️' },
+    { label: 'Next.js', icon: '▲' },
     { label: 'TypeScript', icon: '🟦' },
+    { label: 'JavaScript', icon: '🟨' },
+    { label: 'RxJS', icon: '🔄' },
+    { label: 'PrimeNG', icon: '🧩' },
+    { label: 'Tailwind CSS', icon: '🌊' },
+    { label: 'HTML5', icon: '🟧' },
+    { label: 'CSS/SCSS', icon: '🎨' },
+    { label: 'Formulários Reativos', icon: '📝' },
     { label: 'Java', icon: '☕' },
     { label: 'Spring Boot', icon: '🌱' },
+    { label: 'Spring Security', icon: '🔐' },
+    { label: 'JPA/Hibernate', icon: '🗃️' },
+    { label: 'Bean Validation', icon: '✅' },
     { label: 'PostgreSQL', icon: '🐘' },
+    { label: 'SQL Server', icon: '🗄️' },
+    { label: 'Liquibase', icon: '💧' },
+    { label: 'Maven', icon: '📦' },
+    { label: 'JasperReports', icon: '📊' },
     { label: 'APIs REST', icon: '🔗' },
-    { label: 'Node.js', icon: '🟢' },
-    { label: 'NPM', icon: '📦' },
-    { label: 'Firebase', icon: '🔥' },
-    { label: 'Git', icon: '🔀' },
-    { label: 'GitHub', icon: '🐙' },
-    { label: 'Postman', icon: '✉️' },
-    { label: 'Insomnia', icon: '🌙' },
-    { label: 'Scrum', icon: '📈' },
-    { label: 'Ionic', icon: '💠' },
-    { label: 'HTML', icon: '🟧' },
-    { label: 'CSS', icon: '🎨' },
+    { label: 'JWT', icon: '🔑' },
+    { label: 'Google Cloud Storage', icon: '☁️' },
+    { label: 'APIs de veículos', icon: '🚗' },
+    { label: 'Docker', icon: '🐳' },
+    { label: 'Git/GitLab', icon: '🦊' },
+    { label: 'Testes Unitários', icon: '🧪' },
+    { label: 'Code Review', icon: '👀' },
+    { label: 'Scrum/Kanban', icon: '📈' },
+    { label: 'Deploy', icon: '🚀' },
   ];
 
   ngAfterViewInit(): void {
@@ -154,6 +191,6 @@ export class App implements AfterViewInit, OnDestroy {
 
   getPreviewImage(preview: string): string {
     const match = preview.match(/url\(["']?(.*?)["']?\)/);
-    return match ? match[1] : preview;
+    return match ? match[1] : '';
   }
 }
