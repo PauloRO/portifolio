@@ -1,26 +1,46 @@
 import {
   AfterViewInit,
   Component,
+  HostListener,
   OnDestroy,
+  PLATFORM_ID,
   inject,
   signal,
-  PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 type Project = {
   title: string;
   status: string;
   subtitle: string;
   description: string;
-  preview: string;
+  image: string;
+  tone: string;
   tech: string[];
   meta: string[];
 };
 
-type Tech = {
+type Job = {
+  period: string;
+  company: string;
+  role: string;
+  points: string[];
+  tags: string[];
+};
+
+type Skill = {
   label: string;
   icon: string;
+};
+
+type SkillGroup = {
+  title: string;
+  items: Skill[];
+};
+
+type NavItem = {
+  id: string;
+  label: string;
 };
 
 @Component({
@@ -28,36 +48,62 @@ type Tech = {
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [CommonModule],
 })
 export class App implements AfterViewInit, OnDestroy {
-  readonly title = signal('portifolio');
-
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private observer?: IntersectionObserver;
+  private readonly timers = new Set<number>();
+
+  readonly progress = signal(0);
+  readonly activeSection = signal('home');
+  readonly menuOpen = signal(false);
+  readonly wipeState = signal<'idle' | 'enter' | 'leave' | 'snap'>('idle');
+  readonly wipeLabel = signal('');
+  readonly modalOpen = signal(false);
+  readonly modalProject = signal<Project | null>(null);
+
+  readonly nav: NavItem[] = [
+    { id: 'about', label: 'Sobre' },
+    { id: 'experience', label: 'Experiência' },
+    { id: 'projects', label: 'Projetos' },
+    { id: 'tech', label: 'Stack' },
+  ];
+
+  readonly ticker = [
+    'Angular',
+    'TypeScript',
+    'Java',
+    'Spring Boot',
+    'PostgreSQL',
+    'Next.js',
+    'Docker',
+    'RxJS',
+    'Tailwind',
+    'JWT',
+  ];
+
   readonly projects: Project[] = [
     {
       title: 'Carros Auto Mall ERP',
       status: 'Produção',
-      subtitle: '',
+      subtitle: 'Gestão de compra e venda de veículos',
       description:
-        'Sistema ERP para gestão de compra e venda de carros. Sistema de cadastro de veiculos, clientes, fornecedores.. com regras de negocio para simulações e vendas.',
-      preview:
-        'linear-gradient(140deg, rgba(12, 32, 25, 0.78), rgba(8, 24, 19, 0.82)), url("assets/projetos/carros_erp.jpeg")',
+        'Sistema ERP para gestão de compra e venda de carros. Cadastro de veículos, clientes e fornecedores, com regras de negócio para simulações e vendas.',
+      image: 'assets/projetos/carros_erp.jpeg',
+      tone: 'linear-gradient(160deg, #235347 0%, #051f20 100%)',
       tech: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
       meta: ['API REST', 'JWT', 'Design System'],
     },
     {
       title: 'Carros Auto Mall Site',
       status: 'Produção',
-      subtitle: '',
-      description:
-        'Site para venda de veiculos.',
-      preview:
-        'linear-gradient(150deg, rgba(13, 36, 29, 0.82), rgba(6, 22, 17, 0.78)), url("assets/projetos/carros_site.jpeg")',
+      subtitle: 'Vitrine para venda de veículos',
+      description: 'Site para venda de veículos.',
+      image: 'assets/projetos/carros_site.jpeg',
+      tone: 'linear-gradient(145deg, #163832 0%, #0b2b26 100%)',
       tech: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
-      meta: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL', 'Docker', 'API REST', 'JWT', 'Design System'],
+      meta: ['Angular', 'TypeScript', 'Spring Boot', 'PostgreSQL'],
     },
     {
       title: 'LawHubber',
@@ -65,8 +111,8 @@ export class App implements AfterViewInit, OnDestroy {
       subtitle: 'Gestão de escritório de advocacia.',
       description:
         'Aplicação web de gestão jurídica (processos, contratos, clientes, advogados, tarefas e publicações do DJEN), com dashboard, auditoria, autenticação, rotas protegidas e carregamento sob demanda. Conta com guards de rota, interceptor HTTP, formulários reativos e proteção contra saída com alterações não salvas.',
-      preview:
-        'linear-gradient(140deg, rgba(10, 46, 35, 0.78), rgba(11, 34, 68, 0.82)), url("assets/projetos/lawhubber.png")',
+      image: 'assets/projetos/lawhubber.png',
+      tone: 'linear-gradient(150deg, #0b2b26 0%, #051f20 100%)',
       tech: ['Angular 21', 'TypeScript', 'RxJS', 'PrimeNG', 'Tailwind CSS', 'Chart.js', 'Vitest'],
       meta: [
         'Angular 21',
@@ -83,114 +129,246 @@ export class App implements AfterViewInit, OnDestroy {
         'Vitest',
       ],
     },
-    /* {
-      title: 'Landing full height',
-      status: 'Pessoal',
-      subtitle: 'Landing 100vh com microinterações e scroll suave.',
-      description:
-        'Página one-page com seções ancoradas, animações suaves inspiradas em Material Motion e tipografia editorial.',
-      preview:
-        'linear-gradient(130deg, rgba(7, 28, 22, 0.78), rgba(9, 36, 27, 0.84)), url("https://images.unsplash.com/photo-1507537509458-b8312d35a233?auto=format&fit=crop&w=1200&q=80")',
-      tech: ['Angular', 'Motion', 'Scroll suave'],
-      meta: ['Microinterações', 'Animações', 'SEO'],
-    }, */
   ];
-  readonly selectedProject = signal<Project | null>(null);
-  readonly techs: Tech[] = [
-    { label: 'Angular', icon: '🅰️' },
-    { label: 'Next.js', icon: '▲' },
-    { label: 'TypeScript', icon: '🟦' },
-    { label: 'JavaScript', icon: '🟨' },
-    { label: 'RxJS', icon: '🔄' },
-    { label: 'PrimeNG', icon: '🧩' },
-    { label: 'Tailwind CSS', icon: '🌊' },
-    { label: 'HTML5', icon: '🟧' },
-    { label: 'CSS/SCSS', icon: '🎨' },
-    { label: 'Formulários Reativos', icon: '📝' },
-    { label: 'Java', icon: '☕' },
-    { label: 'Spring Boot', icon: '🌱' },
-    { label: 'Spring Security', icon: '🔐' },
-    { label: 'JPA/Hibernate', icon: '🗃️' },
-    { label: 'Bean Validation', icon: '✅' },
-    { label: 'PostgreSQL', icon: '🐘' },
-    { label: 'SQL Server', icon: '🗄️' },
-    { label: 'Liquibase', icon: '💧' },
-    { label: 'Maven', icon: '📦' },
-    { label: 'JasperReports', icon: '📊' },
-    { label: 'APIs REST', icon: '🔗' },
-    { label: 'JWT', icon: '🔑' },
-    { label: 'Google Cloud Storage', icon: '☁️' },
-    { label: 'APIs de veículos', icon: '🚗' },
-    { label: 'Docker', icon: '🐳' },
-    { label: 'Git/GitLab', icon: '🦊' },
-    { label: 'Testes Unitários', icon: '🧪' },
-    { label: 'Code Review', icon: '👀' },
-    { label: 'Scrum/Kanban', icon: '📈' },
-    { label: 'Deploy', icon: '🚀' },
+
+  readonly jobs: Job[] = [
+    {
+      period: '07/2022 — 06/2026',
+      company: 'Code Square',
+      role: 'Desenvolvedor Full Stack',
+      points: [
+        'Desenvolvimento de interfaces de usuário (front-end) com Angular, aplicando boas práticas de design responsivo e interativo para garantir uma experiência de usuário fluida.',
+        'Atuação no desenvolvimento Back-end utilizando Java com Spring Boot (padrão MVC), com foco na criação de APIs RESTful e regras de negócio eficientes.',
+        'Refatoração de código para atualização de versões e melhoria da legibilidade e performance do projeto.',
+        'Integração de APIs e serviços externos para ampliar as funcionalidades das aplicações.',
+        'Utilização de bancos de dados PostgreSQL com ferramentas como pgAdmin e DBeaver para modelagem, consultas e manutenção.',
+        'Correção de bugs, melhoria de desempenho e testes para assegurar a qualidade do produto final.',
+        'Trabalho colaborativo com equipe multidisciplinar, aplicando metodologias ágeis (como Scrum/Kanban)',
+      ],
+      tags: ['Angular', 'Spring Boot', 'Java', 'PostgreSQL', 'RESTful', 'Scrum', 'Git', 'GitHub', 'pgAdmin', 'DBeaver', 'Postman', 'Insomnia'],
+    },
+    {
+      period: '08/2026 — Atual',
+      company: 'RTech Solutions',
+      role: 'Desenvolvedor Full Stack',
+      points: [
+        'Realizei manutenção evolutiva de telas e layout em Angular no Portal ITBI-e da Prefeitura de Uberlândia, corrigindo problemas de usabilidade e fluxo nas telas de emissão e consulta do Imposto sobre Transmissão de Bens Imóveis para os contribuintes do município.',
+        'Desenvolvi telas, formulários e fluxos de frontend em Next.js (React) de um sistema multi-tenant de gestão de correspondências, utilizado por concessionárias e órgãos reguladores para controle de solicitações, tramitações e prazos.',
+        'Desenvolvi e versionei queries SQL avançadas para migração de dados de RH e folha de pagamento do sistema legado (PostgreSQL) para o módulo GRH, na Câmara Municipal de Uberlândia.',
+        'Elaborei de-paras e processos de remigração e auditoria de dados, assegurando a conformidade dos eventos eSocial (admissão, remuneração, afastamento e desligamento) durante a migração.',
+      ],
+      tags: ['Angular', 'Next.js', 'React', 'TypeScript', 'PostgreSQL', 'SQL', 'eSocial', 'Multi-tenant'],
+    },
   ];
+
+  readonly skillGroups: SkillGroup[] = [
+    {
+      title: 'Front-end',
+      items: [
+        { label: 'Angular', icon: 'assets/icones-portfolio/01-angular.svg' },
+        { label: 'Next.js', icon: 'assets/icones-portfolio/02-nextjs.svg' },
+        { label: 'TypeScript', icon: 'assets/icones-portfolio/03-typescript.svg' },
+        { label: 'JavaScript', icon: 'assets/icones-portfolio/04-javascript.svg' },
+        { label: 'RxJS', icon: 'assets/icones-portfolio/05-rxjs.svg' },
+        { label: 'PrimeNG', icon: 'assets/icones-portfolio/06-primeng.svg' },
+        { label: 'Tailwind CSS', icon: 'assets/icones-portfolio/07-tailwind-css.svg' },
+        { label: 'HTML5', icon: 'assets/icones-portfolio/08-html5.svg' },
+        { label: 'CSS/SCSS', icon: 'assets/icones-portfolio/09-css-scss.svg' },
+        { label: 'Formulários Reativos', icon: 'assets/icones-portfolio/10-formularios-reativos.svg' },
+      ],
+    },
+    {
+      title: 'Back-end',
+      items: [
+        { label: 'Java', icon: 'assets/icones-portfolio/11-java.svg' },
+        { label: 'Spring Boot', icon: 'assets/icones-portfolio/12-spring-boot.svg' },
+        { label: 'Spring Security', icon: 'assets/icones-portfolio/13-spring-security.svg' },
+        { label: 'JPA/Hibernate', icon: 'assets/icones-portfolio/14-jpa-hibernate.svg' },
+        { label: 'Bean Validation', icon: 'assets/icones-portfolio/15-bean-validation.svg' },
+        { label: 'Maven', icon: 'assets/icones-portfolio/19-maven.svg' },
+        { label: 'JasperReports', icon: 'assets/icones-portfolio/20-jasperreports.svg' },
+        { label: 'APIs REST', icon: 'assets/icones-portfolio/21-apis-rest.svg' },
+        { label: 'JWT', icon: 'assets/icones-portfolio/22-jwt.svg' },
+        { label: 'APIs de veículos', icon: 'assets/icones-portfolio/24-apis-veiculos.svg' },
+      ],
+    },
+    {
+      title: 'Dados',
+      items: [
+        { label: 'PostgreSQL', icon: 'assets/icones-portfolio/16-postgresql.svg' },
+        { label: 'SQL Server', icon: 'assets/icones-portfolio/17-sql-server.svg' },
+        { label: 'Liquibase', icon: 'assets/icones-portfolio/18-liquibase.svg' },
+      ],
+    },
+    {
+      title: 'Entrega',
+      items: [
+        { label: 'Google Cloud Storage', icon: 'assets/icones-portfolio/23-google-cloud-storage.svg' },
+        { label: 'Docker', icon: 'assets/icones-portfolio/25-docker.svg' },
+        { label: 'Git/GitLab', icon: 'assets/icones-portfolio/26-git-gitlab.svg' },
+        { label: 'Testes Unitários', icon: 'assets/icones-portfolio/27-testes-unitarios.svg' },
+        { label: 'Code Review', icon: 'assets/icones-portfolio/28-code-review.svg' },
+        { label: 'Scrum/Kanban', icon: 'assets/icones-portfolio/29-scrum-kanban.svg' },
+        { label: 'Deploy', icon: 'assets/icones-portfolio/30-deploy.svg' },
+      ],
+    },
+  ];
+
+  private readonly onScroll = (): void => {
+    const root = document.documentElement;
+    const height = root.scrollHeight - root.clientHeight;
+    this.progress.set(height > 0 ? (root.scrollTop / height) * 100 : 0);
+
+    const marker = window.innerHeight * 0.38;
+    let current = 'home';
+    for (const id of ['home', 'about', 'experience', 'projects', 'tech', 'contact']) {
+      const section = document.getElementById(id);
+      if (section && section.getBoundingClientRect().top <= marker) {
+        current = id;
+      }
+    }
+    this.activeSection.set(current);
+  };
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) {
       return;
     }
 
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    this.onScroll();
+    window.addEventListener('scroll', this.onScroll, { passive: true });
 
-    if (prefersReducedMotion) {
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const elements = document.querySelectorAll<HTMLElement>('.reveal');
+
+    if (reduce || typeof IntersectionObserver === 'undefined') {
+      elements.forEach((element) => element.classList.add('is-in'));
       return;
     }
 
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            this.observer?.unobserve(entry.target);
+          if (!entry.isIntersecting) {
+            return;
           }
+          entry.target.classList.add('is-in');
+          this.observer?.unobserve(entry.target);
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' }
     );
 
-    const elements = document.querySelectorAll<HTMLElement>('.reveal');
-    elements.forEach((element) => {
-      this.observer?.observe(element);
-      const rect = element.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight * 0.9;
-      if (inView) {
-        element.classList.add('visible');
-        this.observer?.unobserve(element);
-      }
-    });
+    elements.forEach((element) => this.observer?.observe(element));
+    this.revealInView();
   }
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
     if (this.isBrowser) {
+      window.removeEventListener('scroll', this.onScroll);
       document.documentElement.classList.remove('modal-open');
+      this.timers.forEach((id) => window.clearTimeout(id));
     }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.modalOpen()) {
+      this.closeProject();
+      return;
+    }
+    if (this.menuOpen()) {
+      this.menuOpen.set(false);
+      this.syncScrollLock();
+    }
+  }
+
+  toggleMenu(): void {
+    this.menuOpen.update((open) => !open);
+    this.syncScrollLock();
+  }
+
+  goTo(event: Event, id: string, label: string): void {
+    event.preventDefault();
+    if (!this.isBrowser || this.wipeState() !== 'idle') {
+      return;
+    }
+
+    this.menuOpen.set(false);
+    this.syncScrollLock();
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      this.jumpTo(id);
+      return;
+    }
+
+    this.wipeLabel.set(label);
+    this.wipeState.set('enter');
+    this.later(() => {
+      this.jumpTo(id);
+      this.wipeState.set('leave');
+      this.later(() => {
+        this.wipeState.set('snap');
+        this.later(() => this.wipeState.set('idle'), 50);
+      }, 680);
+    }, 560);
   }
 
   openProject(project: Project): void {
-    this.selectedProject.set(project);
-
-    if (this.isBrowser) {
-      document.documentElement.classList.add('modal-open');
-    }
+    this.modalProject.set(project);
+    this.modalOpen.set(true);
+    this.syncScrollLock();
   }
 
   closeProject(): void {
-    this.selectedProject.set(null);
-
-    if (this.isBrowser) {
-      document.documentElement.classList.remove('modal-open');
-    }
+    this.modalOpen.set(false);
+    this.syncScrollLock();
+    this.later(() => {
+      if (!this.modalOpen()) {
+        this.modalProject.set(null);
+      }
+    }, 280);
   }
 
-  getPreviewImage(preview: string): string {
-    const match = preview.match(/url\(["']?(.*?)["']?\)/);
-    return match ? match[1] : '';
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).remove();
+  }
+
+  private jumpTo(id: string): void {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    history.replaceState(null, '', `#${id}`);
+    this.activeSection.set(id);
+    this.revealInView();
+  }
+
+  private revealInView(): void {
+    document.querySelectorAll<HTMLElement>('.reveal').forEach((element) => {
+      if (element.classList.contains('is-in')) {
+        return;
+      }
+      const rect = element.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight * 0.9 && rect.bottom > 0;
+      if (visible) {
+        element.classList.add('is-in');
+        this.observer?.unobserve(element);
+      }
+    });
+  }
+
+  private syncScrollLock(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+    document.documentElement.classList.toggle('modal-open', this.menuOpen() || this.modalOpen());
+  }
+
+  private later(fn: () => void, ms: number): void {
+    const id = window.setTimeout(() => {
+      this.timers.delete(id);
+      fn();
+    }, ms);
+    this.timers.add(id);
   }
 }

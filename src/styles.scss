@@ -1,29 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap');
 
 :root {
-  --green-900: #061910;
-  --green-800: #0b2c22;
-  --green-700: #0f3f30;
-  --green-600: #12613d;
-  --green-500: #1b7c4d;
-  --green-400: #2d9c68;
-  --green-300: #53c187;
-  --green-200: #c9e7d8;
-  --accent-green: #34d399;
-  --accent-teal: #14b8a6;
-  --accent-cyan: #22d3ee;
-  --accent-blue: #3b82f6;
-  --blue-900: #07142b;
-  --blue-800: #0b1f3f;
-  --gradient-accent: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-cyan) 55%, var(--accent-blue) 100%);
-  --gradient-accent-soft: linear-gradient(135deg, rgba(52, 211, 153, 0.18), rgba(59, 130, 246, 0.18));
-  --neutral-50: #f6f8f6;
-  --neutral-100: #eef3ef;
-  --text-light: #f7fbf8;
-  --text-dark: #102018;
-  --elevation-1: 0 12px 30px rgba(0, 0, 0, 0.16);
-  --elevation-2: 0 14px 40px rgba(0, 0, 0, 0.18);
-  --elevation-3: 0 18px 60px rgba(0, 0, 0, 0.25);
+  --ink: #051f20;
+  --pine: #0b2b26;
+  --forest: #163832;
+  --moss: #235347;
+  --sage: #8eb69b;
+  --mist: #daf1de;
+  --font-display: 'Syne', 'Segoe UI', sans-serif;
+  --font-body: 'Outfit', 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -34,23 +21,21 @@ html {
   scroll-behavior: smooth;
 }
 
+html.modal-open {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--green-900);
-  color: var(--text-light);
   min-height: 100vh;
-  scroll-snap-type: y proximity;
+  background: var(--ink);
+  color: var(--ink);
+  font-family: var(--font-body);
 }
 
-a {
-  color: inherit;
-}
-
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--accent-cyan);
-  outline-offset: 2px;
+::selection {
+  background: var(--sage);
+  color: var(--ink);
 }
 
 img {
@@ -58,12 +43,20 @@ img {
   display: block;
 }
 
-p {
-  line-height: 1.6;
+button,
+input,
+textarea {
+  font: inherit;
 }
 
-h1,
-h2,
-h3 {
-  line-height: 1.2;
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

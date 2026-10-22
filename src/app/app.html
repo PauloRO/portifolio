@@ -1,332 +1,302 @@
-<div class="page">
-  <header class="top-nav">
-    <div class="brand">
-      <span class="brand-mark">PR</span>
-      <div class="brand-text">
-        <span class="brand-title">Paulo Oliveira</span>
-          <span class="brand-subtitle">Desenvolvedor Full Stack</span>
-      </div>
-    </div>
-    <nav aria-label="Seções principais" class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#about">Sobre</a>
-      <a href="#experience">Experiência</a>
-      <a href="#projects">Projetos</a>
-      <a href="#tech">Tecnologias</a>
-      <a href="#contact">Contato</a>
-    </nav>
-  </header>
+<div class="progress" [style.width.%]="progress()"></div>
 
-  <main>
-    <section id="home" class="section home">
-      <div class="section-content hero-grid simple-hero">
-        <div class="hero-text reveal">
-          <h1 class="hero-title" aria-label="Olá, eu sou Paulo Oliveira">
-            <span class="line1">Olá, eu sou</span>
-            <span class="line2 typewriter-line name-highlight">Paulo Oliveira</span>
-          </h1>
-          <p class="subtitle">Desenvolvedor Full Stack (Angular · TypeScript · Java Spring)</p>
-          <div class="cta-group">
-            <a class="btn primary" href="assets/pdf/CV_Paulo_Oliveira_Desenvolvedor_FullStack.pdf" download>
-              Baixar currículo
-            </a>
-            <a class="btn ghost" href="#contact">Falar comigo</a>
-          </div>
-        </div>
-        <div
-          class="photo-frame reveal"
-            role="img"
-            aria-label="Foto de Paulo Oliveira"
-          >
-            <img src="assets/images/IMG_6727.jpg" alt="Foto de Paulo Oliveira" />
-        </div>
-      </div>
-    </section>
+<div
+  class="wipe"
+  [class.enter]="wipeState() === 'enter'"
+  [class.leave]="wipeState() === 'leave'"
+  [class.snap]="wipeState() === 'snap'"
+  aria-hidden="true"
+>
+  <p class="wipe-label">{{ wipeLabel() }}</p>
+</div>
 
-    <section id="about" class="section about">
-      <div class="section-content split">
-        <div class="section-header reveal">
-          <p class="eyebrow">Sobre mim</p>
-          <h2>Paulo Roberto de Oliveira Sá</h2>
-        </div>
-        <div class="about-grid">
-          <p class="reveal">
-            Sou Desenvolvedor Full Stack dedicado a construir interfaces modernas, intuitivas e
-            funcionais, com Angular/TypeScript no front-end e Java com Spring Boot no back-end,
-            criando APIs REST seguras e integradas a bancos de dados relacionais. Também sou
-            estudante de Sistemas para Internet (Estácio), buscando evolução contínua.
-          </p>
-        </div>
-      </div>
-    </section>
+<header class="nav">
+  <a class="brand" href="#home" (click)="goTo($event, 'home', 'Início')">
+    <span class="brand-mark">Po</span>
+    <span class="brand-name">Paulo Oliveira</span>
+  </a>
+  <nav class="nav-links" aria-label="Seções">
+    @for (item of nav; track item.id) {
+      <a
+        [href]="'#' + item.id"
+        [class.active]="activeSection() === item.id"
+        [attr.aria-current]="activeSection() === item.id ? 'true' : null"
+        (click)="goTo($event, item.id, item.label)"
+      >
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+  <a class="nav-cta" href="#contact" (click)="goTo($event, 'contact', 'Contato')">Contato</a>
+  <button
+    class="menu-btn"
+    type="button"
+    [attr.aria-expanded]="menuOpen()"
+    aria-controls="site-menu"
+    (click)="toggleMenu()"
+  >
+    {{ menuOpen() ? 'Fechar' : 'Menu' }}
+  </button>
+</header>
 
-    <section id="experience" class="section experience">
-      <div class="section-content">
-        <div class="section-header reveal">
-          <p class="eyebrow">Experiência</p>
-        </div>
-        <div class="experience-list">
-          <article class="experience-card reveal">
-            <div>
-              <p class="label">07/2022 · 06/2026</p>
-              <h3>Desenvolvedor Full Stack — Code Square</h3>
-              <ul class="experience-points">
-                <li>
-                  Desenvolvimento de interfaces de usuário (front-end) com Angular, aplicando boas
-                  práticas de design responsivo e interativo para garantir uma experiência de
-                  usuário fluida.
-                </li>
-                <li>
-                  Atuação no desenvolvimento Back-end utilizando Java com Spring Boot (padrão MVC),
-                  com foco na criação de APIs RESTful e regras de negócio eficientes.
-                </li>
-                <li>
-                  Refatoração de código para atualização de versões e melhoria da legibilidade e
-                  performance do projeto.
-                </li>
-                <li>
-                  Integração de APIs e serviços externos para ampliar as funcionalidades das
-                  aplicações.
-                </li>
-                <li>
-                  Utilização de bancos de dados PostgreSQL com ferramentas como pgAdmin e DBeaver
-                  para modelagem, consultas e manutenção.
-                </li>
-                <li>
-                  Correção de bugs, melhoria de desempenho e testes para assegurar a qualidade do
-                  produto final.
-                </li>
-                <li>
-                  Trabalho colaborativo com equipe multidisciplinar, aplicando metodologias ágeis
-                  (como Scrum/Kanban)
-                </li>
-              </ul>
-            </div>
-            <div class="tags">
-              <span class="tag">Angular</span>
-              <span class="tag">Spring Boot</span>
-              <span class="tag">Java</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">RESTful</span>
-              <span class="tag">Scrum</span>
-              <span class="tag">Git</span>
-              <span class="tag">GitHub</span>
-              <span class="tag">pgAdmin</span>
-              <span class="tag">DBeaver</span>
-              <span class="tag">Postman</span>
-              <span class="tag">Insomnia</span>
-            </div>
-          </article>
-          <article class="experience-card reveal">
-            <div>
-              <p class="label">08/2026 · Atual</p>
-              <h3>Desenvolvedor Full Stack — RTech Solutions</h3>
-              <ul class="experience-points">
-                <li>
-                  Realizei manutenção evolutiva de telas e layout em Angular no Portal ITBI-e da
-                  Prefeitura de Uberlândia, corrigindo problemas de usabilidade e fluxo nas telas de
-                  emissão e consulta do Imposto sobre Transmissão de Bens Imóveis para os
-                  contribuintes do município.
-                </li>
-                <li>
-                  Desenvolvi telas, formulários e fluxos de frontend em Next.js (React) de um sistema
-                  multi-tenant de gestão de correspondências, utilizado por concessionárias e órgãos
-                  reguladores para controle de solicitações, tramitações e prazos.
-                </li>
-                <li>
-                  Desenvolvi e versionei queries SQL avançadas para migração de dados de RH e folha
-                  de pagamento do sistema legado (PostgreSQL) para o módulo GRH, na Câmara Municipal
-                  de Uberlândia.
-                </li>
-                <li>
-                  Elaborei de-paras e processos de remigração e auditoria de dados, assegurando a
-                  conformidade dos eventos eSocial (admissão, remuneração, afastamento e
-                  desligamento) durante a migração.
-                </li>
-              </ul>
-            </div>
-            <div class="tags">
-              <span class="tag">Angular</span>
-              <span class="tag">Next.js</span>
-              <span class="tag">React</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">SQL</span>
-              <span class="tag">eSocial</span>
-              <span class="tag">Multi-tenant</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section projects">
-      <div class="section-content">
-        <div class="section-header reveal">
-          <p class="eyebrow">Projetos</p>
-          <h2>Projetos em destaque — profissionais e pessoais.</h2>
-        </div>
-        <div class="project-grid">
-          <article
-            class="project-card reveal"
-            *ngFor="let project of projects"
-            (click)="openProject(project)"
-            (keydown.enter)="openProject(project)"
-            role="button"
-            tabindex="0"
-          >
-            <div class="project-thumb" [style.background-image]="project.preview">
-              <img
-                *ngIf="getPreviewImage(project.preview) as image"
-                [src]="image"
-                [alt]="project.title"
-              />
-            </div>
-            <div class="project-overlay">
-              <div class="project-top">
-                <span class="tag soft">{{ project.status }}</span>
-                <h3>{{ project.title }}</h3>
-                <p class="subtitle">{{ project.subtitle }}</p>
-              </div>
-              <div class="chip-row">
-                <span class="chip" *ngFor="let tech of project.tech">{{ tech }}</span>
-              </div>
-              <span class="preview-hint">Ver prévia ↗</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="project-modal" [class.open]="!!selectedProject()">
-      <div class="project-backdrop" (click)="closeProject()"></div>
-      <div class="project-dialog" *ngIf="selectedProject() as current">
-        <button class="close-btn" type="button" aria-label="Fechar" (click)="closeProject()">
-          ×
-        </button>
-        <div class="dialog-visual" [style.background-image]="current.preview"></div>
-        <div class="dialog-content">
-          <p class="eyebrow">{{ current.status }}</p>
-          <h3>{{ current.title }}</h3>
-          <p class="lead">{{ current.subtitle }}</p>
-          <p class="description">
-            {{ current.description }}
-          </p>
-          <div class="chip-row">
-            <span class="chip" *ngFor="let meta of current.meta">{{ meta }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <section id="tech" class="section tech">
-      <div class="section-content">
-        <div class="section-header reveal">
-          <p class="eyebrow">Tecnologias</p>
-        </div>
-        <div class="tech-grid reveal">
-          <article class="tech-card" *ngFor="let tech of techs">
-            <span class="tech-icon" aria-hidden="true">{{ tech.icon }}</span>
-            <span class="tech-label">{{ tech.label }}</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section contact">
-      <div class="section-content split">
-        <div class="section-header reveal">
-          <p class="eyebrow mb-20px">Contatos</p>
-        </div>
-        <div class="contact-actions reveal">
-          <a
-            class="contact-card"
-            href="mailto:paulorobertosa159@gmail.com"
-            aria-label="Enviar email"
-            title="Email"
-          >
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="2" />
-                <path d="m22 7-10 6L2 7" />
-              </svg>
-            </span>
-            <span class="contact-label">Email</span>
-          </a>
-          <a
-            class="contact-card"
-            href="https://wa.me/5534999902146"
-            target="_blank"
-            rel="noopener"
-            aria-label="Conversar no WhatsApp"
-            title="WhatsApp"
-          >
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.43 9.43 0 0 1-4.8-1.32l-.35-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.44-9.43 9.44zm8.03-17.47A11.28 11.28 0 0 0 12.05.7C5.8.7.7 5.79.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.3l5.7-1.5a11.33 11.33 0 0 0 5.74 1.47h.01c6.26 0 11.35-5.1 11.35-11.35 0-3.03-1.18-5.88-3.32-8.02z" />
-              </svg>
-            </span>
-            <span class="contact-label">WhatsApp</span>
-          </a>
-          <a
-            class="contact-card"
-            href="https://www.linkedin.com/in/paulooliveirasa"
-            target="_blank"
-            rel="noopener"
-            aria-label="Perfil no LinkedIn"
-            title="LinkedIn"
-          >
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
-              </svg>
-            </span>
-            <span class="contact-label">LinkedIn</span>
-          </a>
-          <a
-            class="contact-card"
-            href="https://github.com/PauloRO"
-            target="_blank"
-            rel="noopener"
-            aria-label="Perfil no GitHub"
-            title="GitHub"
-          >
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3" />
-              </svg>
-            </span>
-            <span class="contact-label">GitHub</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="mobile-nav" aria-label="Navegação móvel">
-    <a href="#home" aria-label="Home">
-      <span class="nav-icon" aria-hidden="true">🏠</span>
-      <span class="sr-only">Home</span>
-    </a>
-    <a href="#about" aria-label="Sobre">
-      <span class="nav-icon" aria-hidden="true">👤</span>
-      <span class="sr-only">Sobre</span>
-    </a>
-    <a href="#experience" aria-label="Experiência">
-      <span class="nav-icon" aria-hidden="true">💼</span>
-      <span class="sr-only">Experiência</span>
-    </a>
-    <a href="#projects" aria-label="Projetos">
-      <span class="nav-icon" aria-hidden="true">🗂️</span>
-      <span class="sr-only">Projetos</span>
-    </a>
-    <a href="#tech" aria-label="Tecnologias">
-      <span class="nav-icon" aria-hidden="true">🛠️</span>
-      <span class="sr-only">Tecnologias</span>
-    </a>
-    <a href="#contact" aria-label="Contato">
-      <span class="nav-icon" aria-hidden="true">✉️</span>
-      <span class="sr-only">Contato</span>
-    </a>
+<div class="menu" id="site-menu" [class.open]="menuOpen()" [attr.inert]="menuOpen() ? null : ''">
+  <nav aria-label="Menu">
+    <a href="#home" (click)="goTo($event, 'home', 'Início')">Início</a>
+    @for (item of nav; track item.id) {
+      <a [href]="'#' + item.id" (click)="goTo($event, item.id, item.label)">{{ item.label }}</a>
+    }
+    <a href="#contact" (click)="goTo($event, 'contact', 'Contato')">Contato</a>
   </nav>
 </div>
+
+<main>
+  <section id="home" class="sheet sheet-light hero">
+    <p class="watermark" aria-hidden="true">Full-stack</p>
+    <div class="hero-grid">
+      <p class="kicker">
+        <span class="spark" aria-hidden="true"></span>
+        Portfólio · 2026
+      </p>
+      <h1>
+        <span class="mask"><span class="line">Paulo</span></span>
+        <span class="mask"><span class="line delay">Oliveira</span></span>
+      </h1>
+      <div class="hero-copy">
+        <p class="role">Desenvolvedor Full Stack</p>
+        <p class="role-detail">Angular · TypeScript · Java Spring</p>
+        <div class="hero-actions">
+          <a class="btn solid" href="assets/pdf/CV_Paulo_Oliveira_Desenvolvedor_FullStack.pdf" download>
+            Baixar currículo
+          </a>
+          <a class="btn line" href="#contact" (click)="goTo($event, 'contact', 'Contato')">Falar comigo</a>
+          <div class="socials">
+            <a href="https://github.com/PauloRO" target="_blank" rel="noopener" aria-label="GitHub">Gh</a>
+            <a href="https://www.linkedin.com/in/paulooliveirasa" target="_blank" rel="noopener" aria-label="LinkedIn">In</a>
+            <a href="mailto:paulorobertosa159@gmail.com" aria-label="Email">@</a>
+          </div>
+        </div>
+      </div>
+      <figure class="hero-portrait">
+        <span class="portrait-disc" aria-hidden="true"></span>
+        <img
+          src="assets/images/paulo-noite.jpg"
+          alt="Paulo Oliveira, retrato noturno"
+          fetchpriority="high"
+        />
+        <figcaption>Full Stack · desde 2022</figcaption>
+      </figure>
+    </div>
+    <button class="scroll-cue" type="button" (click)="goTo($event, 'about', 'Sobre')">Descer</button>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      @for (copy of [0, 1]; track copy) {
+        @for (item of ticker; track item) {
+          <span>{{ item }}</span>
+        }
+      }
+    </div>
+  </div>
+
+  <section id="about" class="sheet sheet-light about">
+    <div class="about-layout">
+      <div>
+        <p class="eyebrow reveal"><span>01</span> Sobre</p>
+        <h2 class="display reveal d1">Paulo Roberto de Oliveira Sá</h2>
+        <div class="rule reveal d2"></div>
+        <p class="prose reveal d3">
+          Sou Desenvolvedor Full Stack dedicado a construir interfaces modernas, intuitivas e
+          funcionais, com Angular/TypeScript no front-end e Java com Spring Boot no back-end,
+          criando APIs REST seguras e integradas a bancos de dados relacionais. Também sou
+          estudante de Sistemas para Internet (Estácio), buscando evolução contínua.
+        </p>
+        <p class="study reveal d4">Formação · Sistemas para Internet, Estácio</p>
+        <ul class="stats reveal d5">
+          <li>
+            <strong>2022</strong>
+            <span>início da atuação</span>
+          </li>
+          <li>
+            <strong>02</strong>
+            <span>empresas</span>
+          </li>
+          <li>
+            <strong>03</strong>
+            <span>projetos em destaque</span>
+          </li>
+        </ul>
+      </div>
+      <div class="about-visual reveal d2">
+        <span class="about-circle" aria-hidden="true"></span>
+        <img src="assets/images/paulo-estudio.jpg" alt="Paulo Oliveira, retrato em ambiente interno" />
+        <aside class="about-card">
+          <p>Contato</p>
+          <a href="mailto:paulorobertosa159@gmail.com">paulorobertosa159&#64;gmail.com</a>
+          <a href="https://wa.me/5534999902146" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://www.linkedin.com/in/paulooliveirasa" target="_blank" rel="noopener">LinkedIn</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="sheet sheet-dark experience">
+    <p class="eyebrow reveal"><span>02</span> Experiência</p>
+    <h2 class="display reveal d1">Trajetória</h2>
+    <div class="jobs">
+      @for (job of jobs; track job.company; let index = $index) {
+        <article class="job reveal" [style.--d]="(index * 0.12) + 's'">
+          <div class="job-meta">
+            <p class="job-period">{{ job.period }}</p>
+            <h3>{{ job.company }}</h3>
+            <p class="job-role">{{ job.role }}</p>
+          </div>
+          <div>
+            <ul class="job-points">
+              @for (point of job.points; track point) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+            <div class="chips">
+              @for (tag of job.tags; track tag) {
+                <span>{{ tag }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="projects" class="sheet sheet-light projects">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow reveal"><span>03</span> Projetos</p>
+        <h2 class="display reveal d1">Trabalhos selecionados</h2>
+      </div>
+      <p class="section-lead reveal d2">Sistemas em produção e um produto pessoal de gestão jurídica.</p>
+    </div>
+    <div class="project-grid">
+      @for (project of projects; track project.title; let index = $index) {
+        <article
+          class="project reveal"
+          [style.--d]="(index * 0.1) + 's'"
+          role="button"
+          tabindex="0"
+          (click)="openProject(project)"
+          (keydown.enter)="openProject(project)"
+          (keydown.space)="$event.preventDefault(); openProject(project)"
+        >
+          <div class="project-top">
+            <span class="project-index">0{{ index + 1 }}</span>
+            <span class="status">{{ project.status }}</span>
+          </div>
+          <div class="project-visual" [style.background]="project.tone">
+            <span class="project-fallback">{{ project.title }}</span>
+            <img [src]="project.image" [alt]="project.title" (error)="onImageError($event)" loading="lazy" />
+          </div>
+          <h3>{{ project.title }}</h3>
+          @if (project.subtitle) {
+            <p class="project-sub">{{ project.subtitle }}</p>
+          }
+          <p class="project-copy">{{ project.description }}</p>
+          <div class="chips dark-chips">
+            @for (tech of project.tech.slice(0, 4); track tech) {
+              <span>{{ tech }}</span>
+            }
+          </div>
+          <span class="project-link">Ver projeto</span>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="tech" class="sheet sheet-dark tech">
+    <p class="eyebrow reveal"><span>04</span> Stack</p>
+    <h2 class="display reveal d1">Tecnologias</h2>
+    <p class="section-lead light reveal d2">Ferramentas que uso para construir produto, API e entrega.</p>
+    <div class="skill-groups">
+      @for (group of skillGroups; track group.title) {
+        <article class="skill-group reveal">
+          <h3>{{ group.title }}</h3>
+          <ul>
+            @for (item of group.items; track item.label) {
+              <li class="pill">
+                <span class="pill-icon">
+                  <img [src]="item.icon" alt="" />
+                </span>
+                {{ item.label }}
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="contact" class="sheet sheet-light contact">
+    <div class="contact-layout">
+      <div>
+        <p class="eyebrow reveal"><span>05</span> Contato</p>
+        <h2 class="display reveal d1">Vamos construir algo juntos.</h2>
+        <p class="prose reveal d2">Estou aberto a novos projetos, conversas e oportunidades full stack.</p>
+        <a class="btn solid reveal d3" href="assets/pdf/CV_Paulo_Oliveira_Desenvolvedor_FullStack.pdf" download>
+          Baixar currículo
+        </a>
+      </div>
+      <div class="contact-panel reveal d2">
+        <a class="contact-row" href="mailto:paulorobertosa159@gmail.com">
+          <span>Email</span>
+          <strong>paulorobertosa159&#64;gmail.com</strong>
+        </a>
+        <a class="contact-row" href="https://wa.me/5534999902146" target="_blank" rel="noopener">
+          <span>WhatsApp</span>
+          <strong>Enviar mensagem</strong>
+        </a>
+        <a class="contact-row" href="https://www.linkedin.com/in/paulooliveirasa" target="_blank" rel="noopener">
+          <span>LinkedIn</span>
+          <strong>paulooliveirasa</strong>
+        </a>
+        <a class="contact-row" href="https://github.com/PauloRO" target="_blank" rel="noopener">
+          <span>GitHub</span>
+          <strong>PauloRO</strong>
+        </a>
+        <a class="contact-box" href="mailto:paulorobertosa159@gmail.com">
+          <span>Vamos conversar</span>
+          <strong>Escrever agora</strong>
+        </a>
+      </div>
+    </div>
+    <footer class="colophon">Paulo Oliveira · Desenvolvedor Full Stack · 2026</footer>
+  </section>
+</main>
+
+@if (modalProject(); as current) {
+  <div class="modal" [class.open]="modalOpen()" (click)="closeProject()">
+    <div
+      class="dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="current.title"
+      (click)="$event.stopPropagation()"
+    >
+      <button class="close" type="button" (click)="closeProject()" aria-label="Fechar">Fechar</button>
+      <div class="dialog-visual" [style.background]="current.tone">
+        <img [src]="current.image" [alt]="current.title" (error)="onImageError($event)" />
+      </div>
+      <div class="dialog-copy">
+        <p class="eyebrow"><span>{{ current.status }}</span></p>
+        <h2>{{ current.title }}</h2>
+        @if (current.subtitle) {
+          <p class="project-sub">{{ current.subtitle }}</p>
+        }
+        <p class="prose">{{ current.description }}</p>
+        <div class="chips dark-chips">
+          @for (meta of current.meta; track meta) {
+            <span>{{ meta }}</span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}
