@@ -834,12 +834,57 @@ h1 {
   right: 1rem;
   bottom: 1rem;
   left: 1rem;
+  z-index: 1;
   color: var(--mist);
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
+}
+
+.project-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 1.2rem 1.2rem 3.6rem;
+  pointer-events: none;
+}
+
+.project-mark-icon {
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  background: var(--mist);
+}
+
+.project-visual .project-mark img,
+.dialog-visual .project-mark img {
+  width: 3.1rem;
+  height: 3.1rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+.project-mark strong {
+  color: var(--mist);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-align: center;
+}
+
+.project-mark.is-type strong {
+  font-size: clamp(3.2rem, 6vw, 4.75rem);
+  letter-spacing: -0.06em;
 }
 
 .project-visual img,
@@ -855,7 +900,7 @@ h1 {
   max-height: 46vh;
 }
 
-.project:hover img {
+.project:hover .project-visual > img {
   transform: scale(1.06);
 }
 
@@ -884,11 +929,13 @@ h1 {
 .project-link {
   margin-top: auto;
   padding-top: 1rem;
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .skill-groups {
@@ -1080,6 +1127,7 @@ h1 {
 }
 
 .dialog-visual {
+  position: relative;
   min-height: 220px;
   max-height: 46vh;
   overflow: hidden;

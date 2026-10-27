@@ -18,6 +18,7 @@ type Project = {
   tone: string;
   tech: string[];
   meta: string[];
+  link?: string;
 };
 
 type Job = {
@@ -128,6 +129,86 @@ export class App implements AfterViewInit, OnDestroy {
         'Chart.js',
         'Vitest',
       ],
+    },
+    {
+      title: 'App Médico',
+      status: 'Produção',
+      subtitle: 'Agenda de médicos para uso no celular',
+      description:
+        'Plataforma web voltada à agenda de médicos, pensada para uso em dispositivos móveis, com acesso rápido e prático.',
+      image: 'assets/projetos/app_medico.jpeg',
+      tone: 'linear-gradient(160deg, #235347 0%, #0b2b26 100%)',
+      tech: ['Angular', 'TypeScript', 'Angular Material', 'Bootstrap'],
+      meta: ['Angular', 'TypeScript', 'Angular Material', 'Bootstrap'],
+      link: 'https://www.appmedico.com.br/home',
+    },
+    {
+      title: 'e-ITBI',
+      status: 'Produção',
+      subtitle: 'ITBI eletrônico da Prefeitura de Uberlândia',
+      description:
+        'Sistema web para o processo eletrônico do ITBI (imposto sobre transmissão de bens imóveis), digitalizando o atendimento ao contribuinte.',
+      image: 'assets/projetos/itbi.png',
+      tone: 'linear-gradient(150deg, #163832 0%, #051f20 100%)',
+      tech: ['Angular', 'TypeScript', 'Angular Material'],
+      meta: ['Angular', 'TypeScript', 'Angular Material'],
+      link: 'https://eitbi.uberlandia.mg.gov.br/home',
+    },
+    {
+      title: 'Minha Nova Casa',
+      status: 'Produção',
+      subtitle: 'ERP de crédito imobiliário',
+      description:
+        'ERP de gestão de crédito imobiliário para construtoras, integrado a uma jornada que vai do atendimento do lead até a contratação do financiamento. Atuação no front-end, com ajustes de layout e implementação de regras de negócio.',
+      image: 'assets/projetos/minha_nova_casa.png',
+      tone: 'linear-gradient(145deg, #0b2b26 0%, #235347 100%)',
+      tech: ['React', 'TypeScript', 'Vite'],
+      meta: ['React', 'TypeScript', 'Vite'],
+      link: 'https://minhanova.casa/',
+    },
+    {
+      title: 'Way',
+      status: 'Produção',
+      subtitle: 'Gestão de correspondências',
+      description:
+        'Plataforma web para gerenciar correspondências, solicitações, e-mails e tramitações entre concessionárias e órgãos reguladores. Possui controle de prazos, dashboard com métricas, permissões por perfil, suporte a múltiplos clientes com identidade visual própria e exportação de relatórios em PDF e Excel.',
+      image: '',
+      tone: 'linear-gradient(155deg, #163832 0%, #051f20 100%)',
+      tech: [
+        'Next.js',
+        'React',
+        'TypeScript',
+        'Tailwind CSS',
+        'TanStack Query',
+        'React Hook Form',
+        'Zod',
+        'Java',
+        'API REST',
+        'JWT',
+      ],
+      meta: [
+        'Next.js',
+        'React',
+        'TypeScript',
+        'Tailwind CSS',
+        'TanStack Query',
+        'React Hook Form',
+        'Zod',
+        'Java',
+        'API REST',
+        'JWT',
+      ],
+    },
+    {
+      title: 'Migração eSocial',
+      status: 'Entrega',
+      subtitle: 'RH da Câmara Municipal de Uberlândia',
+      description:
+        'Migração dos eventos do eSocial do RH legado da Câmara Municipal de Uberlândia (PostgreSQL) para o GRH da Prefeitura (Oracle). Na fase de eventos, escrevi os scripts SQL que levam esses dados do banco antigo ao barramento eSocial do novo sistema. O mapeamento foi coluna a coluna nos eventos S-1010 (rubricas), S-2200 (admissão e dependentes), S-2300 (trabalhador sem vínculo), S-2298 (reintegração) e S-2299 (desligamento), com tratamento de retificações e recuperação do recibo original. Também migrei os XMLs enviados ao governo, criei a tabela de de-para dos dependentes e documentei os scripts da fase.',
+      image: '',
+      tone: 'linear-gradient(165deg, #235347 0%, #163832 100%)',
+      tech: ['SQL', 'PostgreSQL', 'Oracle', 'eSocial', 'Git/GitLab'],
+      meta: ['SQL', 'PostgreSQL', 'Oracle', 'eSocial', 'Git/GitLab'],
     },
   ];
 
@@ -314,6 +395,16 @@ export class App implements AfterViewInit, OnDestroy {
         this.later(() => this.wipeState.set('idle'), 50);
       }, 680);
     }, 560);
+  }
+
+  techIcon(label: string): string {
+    for (const group of this.skillGroups) {
+      const item = group.items.find((entry) => entry.label === label);
+      if (item) {
+        return item.icon;
+      }
+    }
+    return '';
   }
 
   openProject(project: Project): void {

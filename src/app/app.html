@@ -122,7 +122,7 @@
             <span>empresas</span>
           </li>
           <li>
-            <strong>03</strong>
+            <strong>08</strong>
             <span>projetos em destaque</span>
           </li>
         </ul>
@@ -174,7 +174,7 @@
         <p class="eyebrow reveal"><span>03</span> Projetos</p>
         <h2 class="display reveal d1">Trabalhos selecionados</h2>
       </div>
-      <p class="section-lead reveal d2">Sistemas em produção e um produto pessoal de gestão jurídica.</p>
+      <p class="section-lead reveal d2">Sistemas em produção, uma migração de dados e um produto pessoal.</p>
     </div>
     <div class="project-grid">
       @for (project of projects; track project.title; let index = $index) {
@@ -193,7 +193,25 @@
           </div>
           <div class="project-visual" [style.background]="project.tone">
             <span class="project-fallback">{{ project.title }}</span>
-            <img [src]="project.image" [alt]="project.title" (error)="onImageError($event)" loading="lazy" />
+            @if (!project.image && project.tech[0]; as tech) {
+              @let icon = techIcon(tech);
+              <div class="project-mark" [class.is-type]="!icon">
+                @if (icon) {
+                  <span class="project-mark-icon">
+                    <img [src]="icon" alt="" />
+                  </span>
+                }
+                <strong>{{ tech }}</strong>
+              </div>
+            }
+            @if (project.image) {
+              <img
+                [src]="project.image"
+                [alt]="project.title + '. ' + project.subtitle"
+                (error)="onImageError($event)"
+                loading="lazy"
+              />
+            }
           </div>
           <h3>{{ project.title }}</h3>
           @if (project.subtitle) {
@@ -205,7 +223,18 @@
               <span>{{ tech }}</span>
             }
           </div>
-          <span class="project-link">Ver projeto</span>
+          @if (project.link) {
+            <a
+              class="project-link"
+              [href]="project.link"
+              target="_blank"
+              rel="noopener"
+              (click)="$event.stopPropagation()"
+              (keydown)="$event.stopPropagation()"
+            >
+              Ver projeto
+            </a>
+          }
         </article>
       }
     </div>
@@ -282,7 +311,24 @@
     >
       <button class="close" type="button" (click)="closeProject()" aria-label="Fechar">Fechar</button>
       <div class="dialog-visual" [style.background]="current.tone">
-        <img [src]="current.image" [alt]="current.title" (error)="onImageError($event)" />
+        @if (!current.image && current.tech[0]; as tech) {
+          @let icon = techIcon(tech);
+          <div class="project-mark" [class.is-type]="!icon">
+            @if (icon) {
+              <span class="project-mark-icon">
+                <img [src]="icon" alt="" />
+              </span>
+            }
+            <strong>{{ tech }}</strong>
+          </div>
+        }
+        @if (current.image) {
+          <img
+            [src]="current.image"
+            [alt]="current.title + '. ' + current.subtitle"
+            (error)="onImageError($event)"
+          />
+        }
       </div>
       <div class="dialog-copy">
         <p class="eyebrow"><span>{{ current.status }}</span></p>
